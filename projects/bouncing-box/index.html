@@ -49,22 +49,21 @@
 			// Every time the box is clicked, call the handleBoxClick Function (see below)
 			box.on('click', handleBoxClick);
 			//Every time the board is clicked, call the handleBoardClick Function (see below)
-			board.on('click', handleBoardClick);
-			box.css('background-color', colorStr);
+			//board.on('click', handleBoardClick);
+			box.css('background-color', colorStr);			
 			// moves the Box to a new position on the screen along the X-Axis
 			function moveBoxTo(newPositionX,newPositionY) {
 				box.css("left", newPositionX);
 				box.css("top",newPositionY);
 			}
-
 			// changes the text displayed on the Box
 			function changeBoxText(newText) {
 				box.text(newText);
 			}
 			// ends game
-			function endGame() {
+			/*function endGame() {
     			clearInterval(interval);
-			}
+			}*/
 			// creates a random color for the box
 			function getRandomColor(){
 				var randomR = Math.random()*255;
@@ -111,6 +110,8 @@
 				if(positionY < 0) {
 					speedY *= -1;
 				}
+				
+				
 			};
 
 			/* 
@@ -146,12 +147,15 @@
 				
 			};
 			// this function is called each time the board is clicked and once the board has been clicked 10 times the game ends
-			function handleBoardClick() {
-				misclicks ++;
+			/*function handleBoardClick() {
+				
+					misclicks ++;
+				
 				if ( misclicks >= 10){
-				 endGame();
-			}
-			};
+					 endGame();
+				};
+			}*/
+				
 			
 		})();
 	</script>
