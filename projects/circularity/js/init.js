@@ -20,14 +20,29 @@ var init = function (window) {
         ////////////////////////////////////////////////////////////
         
         // TODO 1 : Declare and initialize our variables
-
-
+        var circle; // variable to hold a single circle when creating circles / iterating
+        var circles = [];  // variable to store all circles in one Array
         // TODO 2 : Create a function that draws a circle 
-        
+        function drawCircle() {
+         // Code to draw a circle
+            circle = draw.randomCircleInArea(canvas, true, true, '#999', 2); // draws circle 
+            physikz.addRandomVelocity(circle, canvas, 10, 10); // gives circle velocity
+            view.addChild(circle); // makes circle child of view
+            circles.push(circle); //adds the generate circle to a new index in the circles array
+        }
 
         // TODO 3 / 7 : Call the drawCircle() function 
-
-
+        /*drawCircle();
+        drawCircle();
+        drawCircle();
+        drawCircle();
+        drawCircle();
+        calls the drawCircle function 100 times*/
+        for (var i = 0; i < 100; i++){ 
+            drawCircle(); 
+        }
+        
+        
         ////////////////////////////////////////////////////////////
         ///////////////// PROGRAM LOGIC ////////////////////////////
         ////////////////////////////////////////////////////////////
@@ -38,33 +53,48 @@ var init = function (window) {
         and check to see if it has drifted off the screen.         
         */
         function update() {
+            
             // TODO 4 : Update the circle's position //
-
-            
+             // Moved to loop to avoid repition
             // TODO 5 / 10 : Call game.checkCirclePosition() on your circles.
-           
-
+            // Moved to loop to avoid repition
             // TODO 9 : Iterate over the array
-           
-            
+            //iterates over every circle in the array circles and calls the updatePosistion and checkCirclePosition function with them as the arguement
+            for (var i = 0; i < circles.length; i++){
+                var eachCircle = circles[i];
+                physikz.updatePosition(eachCircle);
+                game.checkCirclePosition(eachCircle);
+            }
         }
-    
         /* 
         This Function should check the position of a circle that is passed to the 
         Function. If that circle drifts off the screen, this Function should move
         it to the opposite side of the screen.
         */
         game.checkCirclePosition = function(circle) {
-
+            var rightEdge = circle.x + circle.radius; // the rightmost edge of the circle
+            var leftEdge = circle.x - circle.radius; // the leftmost edge of the circle
+            var bottomEdge = circle.y + circle.radius; // the bottommost edge of the circle
+            var topEdge = circle.y - circle.radius; // the topmost edge of the circle  
             // if the circle has gone past the RIGHT side of the screen then place it on the LEFT
-            if ( circle.x > canvas.width ) {
-                circle.x = 0;
+            if (rightEdge > canvas.width ) {
+                circle.x = 0 + circle.radius;
             }
             
             // TODO 6 : YOUR CODE STARTS HERE //////////////////////
+            // if the circle has gone past the LEFT side of the screen then place it on the RIGHT
+            if (leftEdge < 0){
+                circle.x = canvas.width - circle.radius;
+            }
+            // if the circle has gone past the BOTTOM of the screen then place it on the TOP
+            if (bottomEdge > canvas.height){
+                circle.y = 0 + circle.radius;
+            }
+            // if the circle has gone past the TOP of the screen then place it on the BOTTOM
+            if (topEdge < 0) {
+                circle.y = canvas.height - circle.radius;
+            }
             
-
-
             // YOUR TODO 6 CODE ENDS HERE //////////////////////////
         }
         
@@ -90,3 +120,4 @@ if((typeof process !== 'undefined') &&
     // here, export any references you need for tests //
     module.exports = init;
 }
+

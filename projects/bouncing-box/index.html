@@ -80,8 +80,10 @@
 			// TODO 2 - Variable declarations 
 			{
 				var positionX = 0;
+				var boxBoundsX= positionX + 70;
 				var speedX = 10;
 				var positionY = 0;
+				var boxBoundsY= positionY + 70;
 				var speedY = 10;
 				var points = 0;
 				var divByThree = points % 3;
@@ -98,6 +100,8 @@
 				moveBoxTo(positionX,positionY);
 				positionX += speedX;
 				positionY += speedY;
+				boxBoundsX = positionX + 70;
+				boxBoundsY = positionY + 70;
 				if(positionX > boardWidth - 70) {
 					speedX *= -1;
 				}
@@ -147,14 +151,43 @@
 				
 			};
 			// this function is called each time the board is clicked and once the board has been clicked 10 times the game ends
-			/*function handleBoardClick() {
-				
+			function handleBoardClick() {
+				let x = click.clientX;
+				let y = click.clientY;
+				if ( x >= posistionX && x < boxBoundsX && y >= positionY && y < boxBoundsY  ) {
+					var randX = Math.random() * (boardWidth - 70);
+				var randY = Math.random() * (boardHeight - 70);
+				positionX = randX;
+				positionY = randY;
+				points ++;
+				divByThree = points % 3;
+				if(divByThree === 0 ){
+					speedChange += 1;
+				}
+				changeBoxText(points);
+				if(speedX > 0){
+					speedX +=speedChange;
+				}
+				else if (speedX < 0){
+					speedX -=speedChange;
+				}
+				if(speedY > 0){
+					speedY +=speedChange;
+				}
+				else if (speedY < 0){
+					speedY -=speedChange;
+				}
+				getRandomColor();
+				box.css('background-color', colorStr);
+				}
+			    else {
 					misclicks ++;
+				}	
 				
 				if ( misclicks >= 10){
 					 endGame();
 				};
-			}*/
+			}
 				
 			
 		})();
